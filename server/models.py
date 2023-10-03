@@ -67,6 +67,9 @@ class Comment(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     kindness_id = db.Column(db.Integer, db.ForeignKey('kindness.id'), nullable=False)
 
+    user = db.relationship('User', backref='comments')
+    on_kindness = db.relationship('Kindness', backref='comments')
+
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True, nullable=False)
