@@ -8,7 +8,7 @@ import bcrypt
 from faker import Faker
 
 # Local imports
-from app import app
+from config import app
 from models import db, User, Kindness, Comment, Category
 
 
