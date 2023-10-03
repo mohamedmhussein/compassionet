@@ -38,3 +38,11 @@ class Kindness(db.Model, SerializerMixin):
     description = db.Column(db.String, nullable=False)
     date = db.Column(db.String, nullable=False)
     recipient = db.Column(db.String)
+
+class Comment(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String, nullable=False)
+
+class Reward(db.Model, SerializerMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String, nullable=False)
