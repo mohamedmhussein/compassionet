@@ -19,6 +19,9 @@ class User(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
+    first_name = db.Column(db.String, unique=False)
+    last_name = db.Column(db.String, unique=False)
+    image_url = db.Column(db.String, unique=False)
     email = db.Column(db.String, nullable=False)
     _password_hash = db.Column(db.String, nullable=False)
 
@@ -27,13 +30,18 @@ class User(db.Model, SerializerMixin):
     comments = db.relationship('Comment', backref='commenter', lazy=True)
     liked = db.relationship('Kindness', secondary='user_liked_kindnesses', backref='liked_by')
 
+    
+    
     @hybrid_property
     def password_hash(self):
         return self._password_hash
-    
+    # def password_hash(self):
+    #     if self._password_hash:
+    #         raise AttributeError('Password hashes may not be viewed.')
+            
+
     @password_hash.setter
     def password_hash(self, password):
-        # utf-8 encoding and decoding is required in python 3
         password_hash = bcrypt.generate_password_hash(
             password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
