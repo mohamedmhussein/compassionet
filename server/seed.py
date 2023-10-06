@@ -22,6 +22,9 @@ def create_sample_data():
         password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user = User(
             username=fake.user_name(),
+            first_name=fake.first_name(),
+            last_name=fake.last_name(),
+            image_url='https://images.unsplash.com/photo-1626480145636-a733bcfdcbc4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80',
             email=fake.email(),
             _password_hash=password_hash,
         )
