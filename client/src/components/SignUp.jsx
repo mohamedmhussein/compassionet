@@ -3,7 +3,7 @@ import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
 import * as yup from "yup";
 
-function SignUpForm() {
+function SignUpForm({ onLogin }) {
 
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -50,6 +50,22 @@ function SignUpForm() {
     },
     onSubmit: () => {
 
+      fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formik.values),
+      })
+      .then((r) => {
+        setIsLoading(false);
+        if (r.ok) {
+          r.json().then((user) => onLogin(user));
+        } else {
+          r.json().then((err) => setErrors(err.errors));
+        }
+
+      })
     }
   })
 
@@ -125,7 +141,7 @@ function SignUpForm() {
         />
       </FormField>
       <FormField>
-        <Button type="submit">{isLoading ? "Loading..." : "Sign Up"}</Button>
+        <Button type="submit">{isLoading ?"Loading..." : "Sign Up"}</Button>
       </FormField>
       <FormField>
         {errors.map((err) => (
