@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
 import * as yup from "yup";
+import "../styles/SignUp.css"
 
-function SignUpForm({ onLogin }) {
+function SignUpForm({  }) {
 
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const formSchema = yup.object().shape({
@@ -38,7 +39,7 @@ function SignUpForm({ onLogin }) {
     .required("You must confirm the entered password")
   });
   
-  const formik = useFormik({
+  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
     initialValues: {
         username: "",
         email: "",
@@ -48,6 +49,7 @@ function SignUpForm({ onLogin }) {
         lastName: "",
         imageUrl: "",
     },
+    validationSchema: formSchema,
     onSubmit: () => {
 
       fetch("/signup", {
@@ -55,33 +57,38 @@ function SignUpForm({ onLogin }) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formik.values),
+        body: JSON.stringify(values),
       })
       .then((r) => {
         setIsLoading(false);
         if (r.ok) {
-          r.json().then((user) => onLogin(user));
+          r.json().then((user) => 
+          console.log(user)
+          // onLogin(user)
+          );
         } else {
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((err) => setError(err.error));
         }
 
       })
+      console.log("submitted")
     }
   })
 
 
-
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <FormField>
         <Label htmlFor="username">Username</Label>
         <Input
           type="text"
           id="username"
           autoComplete="off"
-          value={formik.values.username}
-          onChange={formik.handleChange}
+          value={values.username}
+          onChange={handleChange}
+          className={errors.username  ? "input-error" : ""}
         />
+        {errors.username  ? <Error>{errors.username}</Error> : ""}
       </FormField>
       <FormField>
         <Label htmlFor="email">Email</Label>
@@ -89,54 +96,67 @@ function SignUpForm({ onLogin }) {
           type="text"
           id="email"
           autoComplete="off"
-          value={formik.values.email}
-          onChange={formik.handleChange}
+          value={values.email}
+          onChange={handleChange}
+          className={errors.email ? "input-error" : ""}
         />
+        {errors.email ? <Error>{errors.email}</Error> : ""}
       </FormField>
       <FormField>
         <Label htmlFor="password">Password</Label>
         <Input
           type="password"
           id="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
+          value={values.password}
+          onChange={handleChange}
           autoComplete="current-password"
+          className={errors.password ? "input-error" : ""}
         />
+        {errors.password ? <Error>{errors.password}</Error> : ""}
       </FormField>
       <FormField>
         <Label htmlFor="password">Password Confirmation</Label>
         <Input
           type="password"
-          id="password_confirmation"
-          value={formik.values.passwordConfirmation}
-          onChange={formik.handleChange}
-          autoComplete="current-password"
+          id="passwordConfirmation"
+          value={values.passwordConfirmation}
+          onChange={handleChange}
+          autoComplete="off"
+          className={errors.passwordConfirmation  ? "input-error" : ""}
         />
+        {errors.passwordConfirmation ? <Error>{errors.passwordConfirmation}</Error> : ""}
       </FormField>
       <FormField>
-        <Label htmlFor="password">First name</Label>
+        <Label htmlFor="firsName">First name</Label>
         <Input
-          type="name"
+          type="text"
           id="firstName"
-          value={formik.values.firstName}
-          onChange={formik.handleChange}
+          value={values.firstName}
+          onChange={handleChange}
           autoComplete="off"
+          className={errors.firstName ? "input-error" : ""}
         />
+        {errors.firstName ? <Error>{errors.firstName}</Error> : ""}
       </FormField>
       <FormField>
-        <Label htmlFor="password">Last name</Label>
+        <Label htmlFor="LastName">Last name</Label>
         <Input
-          type="name"
+          type="text"
           id="lastName"
-          value={formik.values.lastName}
-          onChange={formik.handleChange}
+          value={values.lastName}
+          onChange={handleChange}
           autoComplete="off"
+          className={errors.lastName ? "input-error" : ""}
         />
+        {errors.lastName ? <Error>{errors.lastName}</Error> : ""}
+      </FormField>
+      <FormField>
+      <Label htmlFor="imageUrl">Profile Image URL</Label>
         <Input
           type="text"
           id="imageUrl"
-          value={formik.values.imageUrl}
-          onChange={formik.handleChange}
+          value={values.imageUrl}
+          onChange={handleChange}
           autoComplete="off"
         />
       </FormField>
@@ -144,7 +164,7 @@ function SignUpForm({ onLogin }) {
         <Button type="submit">{isLoading ?"Loading..." : "Sign Up"}</Button>
       </FormField>
       <FormField>
-        {errors.map((err) => (
+        {error.map((err) => (
           <Error key={err}>{err}</Error>
         ))}
       </FormField>

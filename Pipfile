@@ -13,6 +13,10 @@ flask-restful = "*"
 flask-cors = "*"
 faker = "*"
 bcrypt = "*"
+flask-bcrypt = "*"
 
 [requires]
 python_full_version = "3.8.13"
+
+[pipenv]
+allow_prereleases = true
