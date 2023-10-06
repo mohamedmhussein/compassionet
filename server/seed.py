@@ -10,14 +10,16 @@ from faker import Faker
 # Local imports
 from config import app
 from models import db, User, Kindness, Comment, Category
+fake = Faker()
 
-
+# Create sample data
 def create_sample_data():
     # Create users
+    User.query.delete()
     users = []
     for _ in range(10):
-        password_hash = bcrypt.generate_password_hash(
-            password.encode('utf-8')) 
+        password = 'sample_password'  
+        password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         user = User(
             username=fake.user_name(),
             email=fake.email(),
@@ -28,7 +30,8 @@ def create_sample_data():
     db.session.add_all(users)
     db.session.commit()
     
-    # Create categories
+    # Create categories with meaningful names
+    Category.query.delete()
     category_names = ['Community Service', 'Random Acts of Kindness', 'Helping the Homeless', 'Environmental Stewardship', 'Supporting Education']
     categories = [Category(name=name) for name in category_names]
     
@@ -36,14 +39,15 @@ def create_sample_data():
     db.session.commit()
     
     # Create acts of kindness
+    Kindness.query.delete()
     kindnesses = []
     for _ in range(20):
         kindness = Kindness(
             title=fake.sentence(),
             description=fake.paragraph(),
             date=fake.date_time_between(start_date='-30d', end_date='now').strftime('%Y-%m-%d'),
-            user=random.choice(users),
-            category=random.choice(categories)
+            user_id=random.randint(1, 20),
+            category_id=random.randint(1, 20)
         )
         kindnesses.append(kindness)
     
@@ -51,12 +55,13 @@ def create_sample_data():
     db.session.commit()
     
     # Create comments
+    Comment.query.delete()
     comments = []
     for _ in range(30):
         comment = Comment(
             text=fake.paragraph(),
-            user_id=random.choice(users).id,
-            kindness_id=random.choice(kindnesses).id  
+            user_id =random.randint(1, 20),
+            kindness_id=random.randint(1, 20)
         )
         comments.append(comment)
     
@@ -67,14 +72,11 @@ def create_sample_data():
     for _ in range(50):
         user = random.choice(users)
         kindness = random.choice(kindnesses)
-        if kindness not in user.liked_kindness:
-            user.liked_kindness.append(kindness)
+        if kindness not in user.liked:
+            user.liked.append(kindness)
     
     db.session.commit()
 
-
 if __name__ == '__main__':
-    fake = Faker()
     with app.app_context():
-        print("Starting seed...")
         create_sample_data()

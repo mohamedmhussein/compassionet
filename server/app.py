@@ -8,7 +8,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 # Local imports
 from config import app, db, api
-from models import User, Kindness, Comment, Category, user_category, like
+from models import User, Kindness, Comment, Category
 
 
 # Views go here!
