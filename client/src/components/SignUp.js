@@ -4,7 +4,7 @@ import {useFormik} from "formik";
 import * as yup from "yup";
 import "../styles/SignUp.css"
 
-function SignUpForm({  }) {
+function SignUpForm({ onLogin }) {
 
   const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -62,9 +62,11 @@ function SignUpForm({  }) {
       .then((r) => {
         setIsLoading(false);
         if (r.ok) {
-          r.json().then((user) => 
-          console.log(user)
-          // onLogin(user)
+          r.json().then((user) => {
+            console.log(user)
+            onLogin(user)
+          }
+
           );
         } else {
           r.json().then((err) => setError(err.error));

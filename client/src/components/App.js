@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "./Login";
 import NewKindness from "./NewKindness";
 import KindnessList from "./KindnessList";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
   if (!user) return <Login onLogin={setUser} />;
   
   return (
-    <>
+    <Router>
       <NavBar user={user} setUser={setUser} />
       <main>
         <Switch>
@@ -35,7 +36,7 @@ function App() {
           </Route>
         </Switch>
       </main>
-    </>
+    </Router>
   )
 }
 
