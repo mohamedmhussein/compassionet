@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Button, Error, Input, FormField, Label } from "../styles";
+import {useFormik} from "formik";
 
 function LoginForm({ onLogin }) {
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const {values, errors, touched, handleChange, handleSubmit} = useFormik({
@@ -28,7 +29,7 @@ function LoginForm({ onLogin }) {
           // onLogin(user)
           );
         } else {
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((err) => setError(err.error));
         }
 
       })
@@ -65,7 +66,7 @@ function LoginForm({ onLogin }) {
         </Button>
       </FormField>
       <FormField>
-        {errors.map((err) => (
+        {error.map((err) => (
           <Error key={err}>{err}</Error>
         ))}
       </FormField>

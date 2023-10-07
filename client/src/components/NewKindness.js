@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
+import {useFormik} from "formik";
 
 function NewKindness({ user }) {
 
@@ -28,7 +29,7 @@ function NewKindness({ user }) {
         description: ""
     },
     // validationSchema: formSchema,
-    onSubmit: () => {
+    onSubmit: (e) => {
         e.preventDefault();
         setIsLoading(true);
         fetch("/kindnessUser", {
@@ -106,14 +107,14 @@ function NewKindness({ user }) {
         </form>
       </WrapperChild>
       <WrapperChild>
-        <h1>{title}</h1>
-        <h2>{category}</h2>
+        <h1>{values.title}</h1>
+        <h2>{values.category}</h2>
         <p>
-          <em>Date: {date}</em>
+          <em>Date: {values.date}</em>
           &nbsp;·&nbsp;
           <cite>By {user.username}</cite>
         </p>
-        <ReactMarkdown>{description}</ReactMarkdown>
+        <ReactMarkdown>{values.description}</ReactMarkdown>
       </WrapperChild>
     </Wrapper>
   );

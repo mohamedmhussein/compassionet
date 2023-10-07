@@ -3,8 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Login from "./Login";
 import NewKindness from "./NewKindness";
-import KindnessList from "../pages/KindnessList";
-import NewKindness from "../pages/NewKindness";
+import KindnessList from "./KindnessList";
 
 
 function App() {
