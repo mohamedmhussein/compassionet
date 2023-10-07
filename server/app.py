@@ -57,27 +57,29 @@ class Signup(Resource):
 #         else:
 #             return {"Message": "Unauthorized"}, 401
 
-# class Login(Resource):
-#     def post(self):
+class Login(Resource):
+    def post(self):
 
-#         username = request.get_json()['username']
-#         user = User.query.filter(User.username == username).first()
+        username = request.get_json()['username']
+        user = User.query.filter(User.username == username).first()
         
-#         if user:
-#             #get password
-#             password = request.get_json()['password']
+        if user:
+            #get password
+            password = request.get_json()['password']
 
-#             if user.authenticate(password):
-#                 session['user_id'] = user.id
-#                 return (
-#                 {
-#                     "id" : user.id,
-#                     "username" : user.username,
-#                     "image_url" : user.image_url,
-#                     "bio" : user.bio
-#                 } 
-#                 ),201
-#         return {'error': 'Invalid username or password'}, 401   
+            if user.authenticate(password):
+                session['user_id'] = user.id
+                return (
+                    {
+                        "id" : user.id,
+                        "username" : user.username,
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                        "image_url" : user.image_url,
+                        "email" : user.email
+                    }
+                ),201
+        return {'error': 'Invalid username or password'}, 401   
 
 # class Logout(Resource):
 #     def delete(self):
@@ -130,7 +132,7 @@ class Signup(Resource):
 # api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
 # api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-# api.add_resource(Login, '/login', endpoint='login')
+api.add_resource(Login, '/login', endpoint='login')
 # api.add_resource(Logout, '/logout', endpoint='logout')
 # api.add_resource(RecipeIndex, '/recipes', endpoint='recipes')
 
