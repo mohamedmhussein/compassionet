@@ -91,7 +91,13 @@ class Logout(Resource):
             return {}, 204
         return {"message": "unauthorized"}, 401
 
-# class RecipeIndex(Resource):
+class Categories(Resource):
+    def get(self):
+        categories = [category.to_dict() for category in Category.query.all()]
+
+        return  (categories),200
+
+# class KindnessIndex(Resource):
 #     def get(self):
 
 #         user=User.query.filter(User.id == session.get('user_id')).first()
@@ -102,41 +108,45 @@ class Logout(Resource):
 #         else:
 #             return {"message":"unauthorized"}, 401
 
-#     def post(self):
-#         user=User.query.filter(User.id == session.get('user_id')).first()
+    # def post(self):
+    #     user=User.query.filter(User.id == session.get('user_id')).first()
+    #     category = Category.query
         
-#         if user:
-#             json = request.get_json()
+    #     if user:
+    #         json = request.get_json()
 
-#             try:
-#                 recipe = Recipe(
-#                     title = json['title'],
-#                     instructions = json['instructions'],
-#                     minutes_to_complete = json['minutes_to_complete'],
-#                     user_id = session['user_id']
-#                 )
-#                 db.session.add(recipe)
-#                 db.session.commit()
-#             except IntegrityError:
-#                   return {"message":"Unprocessable Entity"}, 422  
+    #         try:
+    #             kindness = Kindness(
+    #                 title = json['title'],
+    #                 category = json['instructions'],
+    #                 date = json['minutes_to_complete'],
+    #                 description = json['description'],
+    #                 user_id = session['user_id'],
+    #                 category_id = 
+    #             )
+    #             db.session.add(recipe)
+    #             db.session.commit()
+    #         except IntegrityError:
+    #               return {"message":"Unprocessable Entity"}, 422  
 
-#             return (
-#                 {
-#                     "title" : recipe.title,
-#                     "instructions" : recipe.instructions,
-#                     "minutes_to_complete" : recipe.minutes_to_complete,
-#                     "user_id" : recipe.user_id       
-#                 }
-#             ),201
-#         else:
-#             return {"message":"unauthorized"}, 401
+    #         return (
+    #             {
+    #                 "title" : recipe.title,
+    #                 "instructions" : recipe.instructions,
+    #                 "minutes_to_complete" : recipe.minutes_to_complete,
+    #                 "user_id" : recipe.user_id       
+    #             }
+    #         ),201
+    #     else:
+    #         return {"message":"unauthorized"}, 401
 
-# api.add_resource(Index, '/')
+api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
-# api.add_resource(RecipeIndex, '/recipes', endpoint='recipes')
+api.add_resource(Categories, '/categories', endpoint='categories')
+api.add_resource(KindnessIndex, '/kindnessList', endpoint='kindnessList')
 
 
 if __name__ == '__main__':
