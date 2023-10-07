@@ -7,7 +7,7 @@ import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 function NewKindness({ user }) {
 
   const [categories, setCategories] = useState([]);
-  const [errors, setErrors] = useState([]);
+  const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   useEffect(() =>{
@@ -31,7 +31,7 @@ function NewKindness({ user }) {
     onSubmit: () => {
         e.preventDefault();
         setIsLoading(true);
-        fetch("/kindnessList", {
+        fetch("/kindnessUser", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -42,10 +42,10 @@ function NewKindness({ user }) {
           if (r.ok) {
             history.push("/");
           } else {
-            r.json().then((err) => setErrors(err.errors));
+            r.json().then((err) => setError(err.error));
           }
         });
-      console.log("submitted")
+      console.log("posted")
     }
   })
 
@@ -99,7 +99,7 @@ function NewKindness({ user }) {
             </Button>
           </FormField>
           <FormField>
-            {errors.map((err) => (
+            {error.map((err) => (
               <Error key={err}>{err}</Error>
             ))}
           </FormField>

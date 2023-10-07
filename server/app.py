@@ -97,48 +97,50 @@ class Categories(Resource):
 
         return  (categories),200
 
-# class KindnessIndex(Resource):
-#     def get(self):
+class KindnessUser(Resource):
+    def get(self):
+        user=User.query.filter(User.id == session.get('user_id')).first()
 
-#         user=User.query.filter(User.id == session.get('user_id')).first()
+
         
-#         if user:
-#             recipes =[recipe.to_dict() for recipe in Recipe.query.all()]
-#             return (recipes),200
-#         else:
-#             return {"message":"unauthorized"}, 401
+        if user:
+            kindnesses =[kindness.to_dict() for kindness in Kindness.query.all()]
+            return (kindnesses),200
+        else:
+            return {"message":"unauthorized"}, 401
 
-    # def post(self):
-    #     user=User.query.filter(User.id == session.get('user_id')).first()
-    #     category = Category.query
+    def post(self):
+        json = request.get_json()
+        user=User.query.filter(User.id == session.get('user_id')).first()
+        category = Category.query.filter(Category.name == json['category']).first()
         
-    #     if user:
-    #         json = request.get_json()
+        if user:
 
-    #         try:
-    #             kindness = Kindness(
-    #                 title = json['title'],
-    #                 category = json['instructions'],
-    #                 date = json['minutes_to_complete'],
-    #                 description = json['description'],
-    #                 user_id = session['user_id'],
-    #                 category_id = 
-    #             )
-    #             db.session.add(recipe)
-    #             db.session.commit()
-    #         except IntegrityError:
-    #               return {"message":"Unprocessable Entity"}, 422  
+        
+            try:
+                kindness = Kindness(
+                    title = json['title'],
+                    date = json['date'],
+                    description = json['description'],
+                    user_id = session['user_id'],
+                    category_id = category.id 
+                )
+                db.session.add(kindness)
+                db.session.commit()
+            except IntegrityError:
+                  return {"message":"Unprocessable Entity"}, 422  
 
-    #         return (
-    #             {
-    #                 "title" : recipe.title,
-    #                 "instructions" : recipe.instructions,
-    #                 "minutes_to_complete" : recipe.minutes_to_complete,
-    #                 "user_id" : recipe.user_id       
-    #             }
-    #         ),201
-    #     else:
-    #         return {"message":"unauthorized"}, 401
+            return (
+                {
+                    "title" : kindness.title,
+                    "date" : kindness.date,
+                    "description" : kindness.description,
+                    "user_id" : kindness.user_id,
+                    "category_id" : kindness.category_id       
+                }
+            ),201
+        else:
+            return {"message":"unauthorized"}, 401
 
 api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -146,7 +148,7 @@ api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Categories, '/categories', endpoint='categories')
-api.add_resource(KindnessIndex, '/kindnessList', endpoint='kindnessList')
+api.add_resource(KindnessUser, '/kindnessUser', endpoint='kindnessUser')
 
 
 if __name__ == '__main__':

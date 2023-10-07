@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
-import SignUp from "./SignUp"
 import NavBar from "./NavBar";
 import Login from "./Login";
-// import RecipeList from "../pages/RecipeList";
-// import NewRecipe from "../pages/NewRecipe";
+import NewKindness from "./NewKindness";
+import KindnessList from "../pages/KindnessList";
+import NewKindness from "../pages/NewKindness";
 
 
 function App() {
@@ -24,19 +24,19 @@ function App() {
   if (!user) return <Login onLogin={setUser} />;
   
   return (
-    // <>
-    //   <NavBar user={user} setUser={setUser} />
-    //   <main>
-    //     <Switch>
-    //       <Route path="/new">
-    //         <NewRecipe user={user} />
-    //       </Route>
-    //       <Route path="/">
-    //         <RecipeList />
-    //       </Route>
-    //     </Switch>
-    //   </main>
-    // </>
+    <>
+      <NavBar user={user} setUser={setUser} />
+      <main>
+        <Switch>
+          <Route path="/new">
+            <NewKindness user={user} />
+          </Route>
+          <Route path="/">
+            <KindnessList />
+          </Route>
+        </Switch>
+      </main>
+    </>
   )
 }
 
