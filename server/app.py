@@ -41,21 +41,23 @@ class Signup(Resource):
             }
         ), 201
 
-# class CheckSession(Resource):
-#     def get(self):
-#         user=User.query.filter(User.id == session.get('user_id')).first()
+class CheckSession(Resource):
+    def get(self):
+        user=User.query.filter(User.id == session.get('user_id')).first()
 
-#         if user:
-#             return (
-#             {
-#                 "id" : user.id,
-#                 "username" : user.username,
-#                 "image_url" : user.image_url,
-#                 "bio" : user.bio
-#             }
-#             ),200
-#         else:
-#             return {"Message": "Unauthorized"}, 401
+        if user:
+            return (
+                {
+                    "id" : user.id,
+                    "username" : user.username,
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "image_url" : user.image_url,
+                    "email" : user.email
+                }
+            ),200
+        else:
+            return {"Message": "Unauthorized"}, 401
 
 class Login(Resource):
     def post(self):
@@ -131,7 +133,7 @@ class Login(Resource):
 
 # api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
-# api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 api.add_resource(Login, '/login', endpoint='login')
 # api.add_resource(Logout, '/logout', endpoint='logout')
 # api.add_resource(RecipeIndex, '/recipes', endpoint='recipes')
