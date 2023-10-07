@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import SignUp from "./SignUp"
+import NavBar from "./NavBar";
+import Login from "./Login";
+// import RecipeList from "../pages/RecipeList";
+// import NewRecipe from "../pages/NewRecipe";
 
 
 function App() {
@@ -9,19 +13,30 @@ function App() {
 
   useEffect(() => {
     // auto-login
-    fetch("/check_session").then((r) => {
+    fetch("/check_session")
+    .then((r) => {
       if (r.ok) {
         r.json().then((user) => setUser(user));
       }
     });
   }, []);
   
+  if (!user) return <Login onLogin={setUser} />;
   
   return (
-    <>
-    <h1>Project Client</h1>
-    <SignUp />
-    </>
+    // <>
+    //   <NavBar user={user} setUser={setUser} />
+    //   <main>
+    //     <Switch>
+    //       <Route path="/new">
+    //         <NewRecipe user={user} />
+    //       </Route>
+    //       <Route path="/">
+    //         <RecipeList />
+    //       </Route>
+    //     </Switch>
+    //   </main>
+    // </>
   )
 }
 
