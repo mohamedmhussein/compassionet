@@ -67,7 +67,7 @@ def create_sample_data():
             title=fake.sentence(),
             description=fake.paragraph(),
             date=fake.date_time_between(start_date='-30d', end_date='now').strftime('%Y-%m-%d'),
-            user_id=random.randint(1, 20),
+            user_id=random.randint(1, 10),
             category_id=random.randint(1, 16)
         )
         kindnesses.append(kindness)
@@ -81,7 +81,7 @@ def create_sample_data():
     for _ in range(30):
         comment = Comment(
             text=fake.paragraph(),
-            user_id =random.randint(1, 20),
+            user_id =random.randint(1, 10),
             kindness_id=random.randint(1, 20)
         )
         comments.append(comment)
