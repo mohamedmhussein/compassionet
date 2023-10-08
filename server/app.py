@@ -110,7 +110,7 @@ class KindnessUser(Resource):
                     "description": kindness.description,
                     "date": kindness.date,
                     "category": category.name,
-                    "performer": kindness.performer.username,
+                    "performer": user.username,
                 }
                 kindnesses.append(kindness_dict)
 

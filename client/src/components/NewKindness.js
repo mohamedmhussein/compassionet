@@ -25,7 +25,7 @@ function NewKindness({ user }) {
   },[])
 
 
-  const {values, handleChange, handleSubmit} = useFormik({
+  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
     initialValues: {
         title: "",
         category: "",
@@ -76,9 +76,12 @@ function NewKindness({ user }) {
                 value={values.category}
                 onChange={handleChange}>
                 {categories.map((category) => (
-                    <option key={category} value={values.category}>{category}</option>
+                    <option key={category} value={category} label={category}/>
                 ))}
             </select>
+            {touched.category && errors.category ? (
+            <div className="error">{errors.category}</div>
+            ) : null}
           </FormField>
           <FormField>
             <Label htmlFor="date">Date (YYYY-MM-DD)</Label>
