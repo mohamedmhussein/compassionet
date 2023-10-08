@@ -41,8 +41,9 @@ function KindnessList() {
                   Edit
                 </Button>
                 <Button
+                    as={Link}
                   onClick={() => handleDelete(kindness.id)}
-                  color="danger"
+                  color="primary"
                 >
                   Delete
                 </Button>

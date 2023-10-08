@@ -24,7 +24,7 @@ function NavBar({ user, setUser }) {
         <Button as={Link} to="/new">
           New Kindness
         </Button>
-        <Button variant="outline" onClick={handleLogoutClick}>
+        <Button variant="outline"as={Link} onClick={handleLogoutClick}>
           Sign Out
         </Button>
       </Nav>
