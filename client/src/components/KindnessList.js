@@ -10,7 +10,7 @@ function KindnessList() {
   useEffect(() => {
     fetch("/kindnessUser")
       .then((r) => r.json())
-      .then(setKindnesses);
+      .then(kindnesses => setKindnesses(kindnesses));
   }, []);
 
   return (
@@ -24,9 +24,9 @@ function KindnessList() {
               <p>
                 <em>Date: {kindness.date} </em>
                 &nbsp;·&nbsp;
-                <cite>By {kindness.performer.username}</cite>
+                <cite>By {kindness.performer}</cite>
               </p>
-              <ReactMarkdown>{kindness.instructions}</ReactMarkdown>
+              <ReactMarkdown>{kindness.description}</ReactMarkdown>
             </Box>
           </Kindness>
         ))

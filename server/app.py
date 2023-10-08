@@ -100,11 +100,21 @@ class Categories(Resource):
 class KindnessUser(Resource):
     def get(self):
         user=User.query.filter(User.id == session.get('user_id')).first()
-
-
         
         if user:
-            kindnesses =[kindness.to_dict() for kindness in Kindness.query.all()]
+            kindnesses = []
+            for kindness in Kindness.query.all():
+                category=Category.query.filter(Category.id == kindness.category_id).first()
+                kindness_dict = {
+                    "title": kindness.title,
+                    "description": kindness.description,
+                    "date": kindness.date,
+                    "category": category.name,
+                    "performer": kindness.performer.username,
+                }
+                kindnesses.append(kindness_dict)
+
+            # kindnesses =[kindness.to_dict() for kindness in Kindness.query.all()]
             return (kindnesses),200
         else:
             return {"message":"unauthorized"}, 401

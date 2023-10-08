@@ -14,7 +14,7 @@ user_liked_kindnesses = db.Table('user_liked_kindnesses',
 )
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
-    serialize_rules = ('-kindness.user','-comments.user',)
+    serialize_rules = ('-kindnesses.user','-comments.user',)
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
@@ -51,7 +51,7 @@ class User(db.Model, SerializerMixin):
 
 class Kindness(db.Model, SerializerMixin):
     __tablename__ = 'kindnesses'
-    serialize_rules = ('-comments.kindness', '-liked_bys.kindness',)
+    serialize_rules = ('-comments.kindness', '-user.kindnesses', '-category.kindnesses')
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
@@ -63,14 +63,23 @@ class Kindness(db.Model, SerializerMixin):
 
     comments = db.relationship('Comment', backref='on_kindness', lazy=True)
 
+    # def dictionary(self):
+    #     return {
+    #         'id': self.id,
+    #         'title': self.title,
+    #         'description': self.description,
+    #         'date': self.date,
+    #         'user_id': self.user_id,
+    #         'category_id': self.category_id,
+    #     }
+
 
 
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     
-    serialize_rules = ('-comments.kindness',)
-    
+    serialize_rules = ('-comments.kindness', 'user.comments', '-kindness.comments',)
     text = db.Column(db.String, nullable=False)
 
     # Link Comment to User and Kindness
@@ -81,7 +90,9 @@ class Comment(db.Model, SerializerMixin):
 
 class Category(db.Model):
     __tablename__ = 'categories'
+    serialize_rules = ('-kindnesses.category')
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
     kindnesses = db.relationship('Kindness', backref='kindness', lazy=True)
+    

@@ -35,7 +35,25 @@ def create_sample_data():
     
     # Create categories with meaningful names
     Category.query.delete()
-    category_names = ['Community Service', 'Random Acts of Kindness', 'Helping the Homeless', 'Environmental Stewardship', 'Supporting Education']
+    category_names = [
+        'Community Service',
+        'Random Acts of Kindness',
+        'Helping the Homeless',
+        'Environmental Stewardship',
+        'Supporting Education',
+        'Animal Welfare',
+        'Health and Wellness',
+        'Elderly Care',
+        'Youth Development',
+        'Cultural Preservation',
+        'Emergency Relief',
+        'Promoting Equality',
+        'Clean Energy Initiatives',
+        'Food Security',
+        'Mental Health Support',
+        'Arts and Culture'
+    ]
+
     categories = [Category(name=name) for name in category_names]
     
     db.session.add_all(categories)
@@ -50,7 +68,7 @@ def create_sample_data():
             description=fake.paragraph(),
             date=fake.date_time_between(start_date='-30d', end_date='now').strftime('%Y-%m-%d'),
             user_id=random.randint(1, 20),
-            category_id=random.randint(1, 20)
+            category_id=random.randint(1, 16)
         )
         kindnesses.append(kindness)
     
