@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import ReactMarkdown from "react-markdown";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
 import '../styles/NewKindness.css'
@@ -111,16 +110,6 @@ function NewKindness({ user }) {
           </FormField>
         </form>
       </WrapperChild>
-      {/* <WrapperChild>
-        <h1>{values.title}</h1>
-        <h2>{values.category}</h2>
-        <p>
-          <em>Date: {values.date}</em>
-          &nbsp;·&nbsp;
-          <cite>By {user.username}</cite>
-        </p>
-        <ReactMarkdown>{values.description}</ReactMarkdown>
-      </WrapperChild> */}
     </Wrapper>
   );
 }
