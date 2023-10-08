@@ -9,7 +9,7 @@ function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
-    <>
+    <div>
       <Logo>CompassioNet</Logo>
       {showLogin ? (
         <>
@@ -34,7 +34,7 @@ function Login({ onLogin }) {
           </p>
         </>
       )}
-    </>
+    </div>
   );
 }
 
