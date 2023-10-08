@@ -18,6 +18,9 @@ function NavBar({ user, setUser }) {
         <Link to="/">CompassioNet</Link>
       </Logo>
       <Nav>
+        <Button as={Link} to="/all">
+          All Kindnesses
+        </Button>
         <Button as={Link} to="/new">
           New Kindness
         </Button>

@@ -4,6 +4,7 @@ import Login from "./Login";
 import NewKindness from "./NewKindness";
 import KindnessList from "./KindnessList";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import AllKindnesses from "./AllKindnesses"
 
 
 
@@ -28,11 +29,14 @@ function App() {
       <NavBar user={user} setUser={setUser} />
       <main>
         <Switch>
-          <Route path="/new">
+          <Route exact path="/new">
             <NewKindness user={user} />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <KindnessList />
+          </Route>
+          <Route exact path="/all">
+            <AllKindnesses />
           </Route>
         </Switch>
       </main>

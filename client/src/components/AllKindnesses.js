@@ -9,14 +9,12 @@ function KindnessList() {
   const [kindnesses, setKindnesses] = useState([]);
 
   useEffect(() => {
-    fetch("/kindnessUser")
+    fetch("/allKindnesses")
       .then((r) => r.json())
-      .then(kindnesses => setKindnesses(kindnesses));
+      .then(kindnesses => {
+        console.log(kindnesses)
+        setKindnesses(kindnesses)});
   }, []);
-
-  const handleDelete = (id) => {
-
-      };
 
   return (
     <div>

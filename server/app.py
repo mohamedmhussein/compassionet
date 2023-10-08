@@ -97,13 +97,34 @@ class Categories(Resource):
 
         return  (categories),200
 
+class AllKindnesses(Resource):
+    def get(self):       
+
+        kindnesses = []
+        for kindness in Kindness.query.all():
+            category=Category.query.filter(Category.id == kindness.category_id).first()
+            user = User.query.filter(User.id == kindness.user_id).first()
+
+            kindness_dict = {
+                "title": kindness.title,
+                "description": kindness.description,
+                "date": kindness.date,
+                "category": category.name,
+                "performer": user.username,
+            }
+            kindnesses.append(kindness_dict)
+
+        return (kindnesses),200
+
+
+
 class KindnessUser(Resource):
     def get(self):
         user=User.query.filter(User.id == session.get('user_id')).first()
         
         if user:
             kindnesses = []
-            for kindness in Kindness.query.all():
+            for kindness in Kindness.query.filter(Kindness.user_id == session.get('user_id')):
                 category=Category.query.filter(Category.id == kindness.category_id).first()
                 kindness_dict = {
                     "title": kindness.title,
@@ -159,6 +180,7 @@ api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(KindnessUser, '/kindnessUser', endpoint='kindnessUser')
+api.add_resource(AllKindnesses, '/allKindnesses', endpoint='allKindnesses')
 
 
 if __name__ == '__main__':
