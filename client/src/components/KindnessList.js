@@ -14,8 +14,22 @@ function KindnessList() {
       .then(kindnesses => setKindnesses(kindnesses));
   }, []);
 
-  const handleDelete = (id) => {
-
+    function handleDelete(id){
+        console.log("Mohamed")
+        // Delete request
+        // fetch(`/kindnessUser/${id}`, {
+        //   method: "DELETE",
+        // })
+        //   .then((r) => {
+        //     if (r.ok) {
+        //       setKindnesses((prevKindnesses) =>
+        //         prevKindnesses.filter((kindness) => kindness.id !== id)
+        //       );
+        //     }
+        //   })
+        //   .catch((error) => {
+        //     console.error("Error deleting kindness:", error);
+        //   });
       };
 
   return (
@@ -34,15 +48,15 @@ function KindnessList() {
               <ReactMarkdown>{kindness.description}</ReactMarkdown>
               <ButtonContainer>
                 <Button
-                  as={Link}
+                //   as={Link}
                   to={`/edit/${kindness.id}`}
                   color="primary"
                 >
                   Edit
                 </Button>
                 <Button
-                    as={Link}
-                  onClick={() => handleDelete(kindness.id)}
+                //   as={Link}
+                  onClick={handleDelete(kindness.id)}
                   color="primary"
                 >
                   Delete
@@ -63,10 +77,6 @@ function KindnessList() {
   );
 }
 
-// const Wrapper = styled.section`
-//   max-width: 800px;
-//   margin: 40px auto;
-// `;
 
 const Kindness = styled.article`
   margin-bottom: 24px;

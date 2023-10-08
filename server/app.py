@@ -116,7 +116,14 @@ class AllKindnesses(Resource):
 
         return (kindnesses),200
 
+class KindnessByID(Resource):
+    def delete(self, id):
+        kindness = Kindness.query.filter_by(Kindness.id == id).first()
 
+        db.session.delete(kindness)
+        db.session.commit()
+
+        return "", 204
 
 class KindnessUser(Resource):
     def get(self):
@@ -181,6 +188,7 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(KindnessUser, '/kindnessUser', endpoint='kindnessUser')
 api.add_resource(AllKindnesses, '/allKindnesses', endpoint='allKindnesses')
+api.add_resource(KindnessByID, '/kindnessUser/<int:id>', endpoint='/kindnessUser/<int:id>')
 
 
 if __name__ == '__main__':
