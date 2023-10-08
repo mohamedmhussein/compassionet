@@ -120,10 +120,10 @@ class KindnessUser(Resource):
             try:
                 kindness = Kindness(
                     title = json['title'],
-                    date = json['date'],
                     description = json['description'],
+                    date = json['date'],
                     user_id = session['user_id'],
-                    category_id = category.id 
+                    category_id = category.id
                 )
                 db.session.add(kindness)
                 db.session.commit()
@@ -136,7 +136,7 @@ class KindnessUser(Resource):
                     "date" : kindness.date,
                     "description" : kindness.description,
                     "user_id" : kindness.user_id,
-                    "category_id" : kindness.category_id       
+                    "category_id" : kindness.category_id  
                 }
             ),201
         else:

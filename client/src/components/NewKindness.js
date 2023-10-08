@@ -50,7 +50,7 @@ function NewKindness({ user }) {
             r.json().then((err) => setError(err.error));
           }
         });
-      console.log("posted")
+      console.log("posted", values)
     }
   })
 
@@ -76,7 +76,7 @@ function NewKindness({ user }) {
                 value={values.category}
                 onChange={handleChange}>
                 {categories.map((category) => (
-                    <option value={category}>{category}</option>
+                    <option key={category} value={values.category}>{category}</option>
                 ))}
             </select>
           </FormField>
