@@ -32,6 +32,21 @@ function KindnessList() {
                 <cite>By {kindness.performer}</cite>
               </p>
               <ReactMarkdown>{kindness.description}</ReactMarkdown>
+              <ButtonContainer>
+                <Button
+                  as={Link}
+                  to={`/edit/${kindness.id}`}
+                  color="primary"
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => handleDelete(kindness.id)}
+                  color="danger"
+                >
+                  Delete
+                </Button>
+              </ButtonContainer>
             </Box>
           </Kindness>
         ))
@@ -54,6 +69,12 @@ function KindnessList() {
 
 const Kindness = styled.article`
   margin-bottom: 24px;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
 `;
 
 export default KindnessList;
