@@ -4,6 +4,7 @@ import styled from "styled-components";
 import ReactMarkdown from "react-markdown";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
+import '../styles/NewKindness.css'
 
 function NewKindness({ user }) {
 
@@ -15,13 +16,17 @@ function NewKindness({ user }) {
     fetch("/categories")
     .then((r) => {
       if (r.ok) {
-        r.json().then((category) => setCategories(category));
+        r.json().then((category) => {
+            setCategories(category)
+            console.log(category)
+        })
+        
       }
     });
   },[])
 
 
-  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
+  const {values, handleChange, handleSubmit} = useFormik({
     initialValues: {
         title: "",
         category: "",
@@ -71,9 +76,9 @@ function NewKindness({ user }) {
                 name="category"
                 value={values.category}
                 onChange={handleChange}>
-                {categories.map(category => {
+                {categories.map((category) => (
                     <option value={category}>{category}</option>
-                })}
+                ))}
             </select>
           </FormField>
           <FormField>
@@ -86,9 +91,9 @@ function NewKindness({ user }) {
             />
           </FormField>
           <FormField>
-            <Label htmlFor="desciption">Description</Label>
+            <Label htmlFor="description">Description</Label>
             <Textarea
-              id="desciption"
+              id="description"
               rows="10"
               value={values.description}
               onChange={handleChange}
@@ -106,7 +111,7 @@ function NewKindness({ user }) {
           </FormField>
         </form>
       </WrapperChild>
-      <WrapperChild>
+      {/* <WrapperChild>
         <h1>{values.title}</h1>
         <h2>{values.category}</h2>
         <p>
@@ -115,7 +120,7 @@ function NewKindness({ user }) {
           <cite>By {user.username}</cite>
         </p>
         <ReactMarkdown>{values.description}</ReactMarkdown>
-      </WrapperChild>
+      </WrapperChild> */}
     </Wrapper>
   );
 }

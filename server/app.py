@@ -93,7 +93,7 @@ class Logout(Resource):
 
 class Categories(Resource):
     def get(self):
-        categories = [category.to_dict() for category in Category.query.all()]
+        categories = [category.name for category in Category.query.all()]
 
         return  (categories),200
 
