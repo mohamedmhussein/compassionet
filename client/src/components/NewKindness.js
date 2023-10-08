@@ -34,7 +34,6 @@ function NewKindness({ user }) {
     },
     // validationSchema: formSchema,
     onSubmit: (e) => {
-        // e.preventDefault();
         setIsLoading(true);
         fetch("/kindnessUser", {
           method: "POST",

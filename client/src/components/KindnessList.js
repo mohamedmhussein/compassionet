@@ -15,21 +15,21 @@ function KindnessList() {
   }, []);
 
     function handleDelete(id){
-        console.log("Mohamed")
+        console.log(kindnesses)
         // Delete request
-        // fetch(`/kindnessUser/${id}`, {
-        //   method: "DELETE",
-        // })
-        //   .then((r) => {
-        //     if (r.ok) {
-        //       setKindnesses((prevKindnesses) =>
-        //         prevKindnesses.filter((kindness) => kindness.id !== id)
-        //       );
-        //     }
-        //   })
-        //   .catch((error) => {
-        //     console.error("Error deleting kindness:", error);
-        //   });
+        fetch(`/kindnessUser/${id}`, {
+          method: "DELETE",
+        })
+          .then((r) => {
+            if (r.ok) {
+              setKindnesses((prevKindnesses) =>
+                prevKindnesses.filter((kindness) => kindness.id !== id)
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error deleting kindness:", error);
+          });
       };
 
   return (
@@ -56,7 +56,7 @@ function KindnessList() {
                 </Button>
                 <Button
                 //   as={Link}
-                  onClick={handleDelete(kindness.id)}
+                  onClick={() => handleDelete(kindness.id)}
                   color="primary"
                 >
                   Delete

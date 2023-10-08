@@ -118,7 +118,7 @@ class AllKindnesses(Resource):
 
 class KindnessByID(Resource):
     def delete(self, id):
-        kindness = Kindness.query.filter_by(Kindness.id == id).first()
+        kindness = Kindness.query.filter_by(id=id).first()
 
         db.session.delete(kindness)
         db.session.commit()
@@ -134,6 +134,7 @@ class KindnessUser(Resource):
             for kindness in Kindness.query.filter(Kindness.user_id == session.get('user_id')):
                 category=Category.query.filter(Category.id == kindness.category_id).first()
                 kindness_dict = {
+                    "id": kindness.id,
                     "title": kindness.title,
                     "description": kindness.description,
                     "date": kindness.date,
