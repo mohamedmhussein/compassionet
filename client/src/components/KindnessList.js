@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
+import "../styles/KindnessList.css"
 
 function KindnessList() {
   const [kindnesses, setKindnesses] = useState([]);
@@ -14,7 +15,7 @@ function KindnessList() {
   }, []);
 
   return (
-    <Wrapper>
+    <div>
       {kindnesses.length > 0 ? (
         kindnesses.map((kindness) => (
           <Kindness key={kindness.id}>
@@ -38,7 +39,7 @@ function KindnessList() {
           </Button>
         </>
       )}
-    </Wrapper>
+    </div>
   );
 }
 
