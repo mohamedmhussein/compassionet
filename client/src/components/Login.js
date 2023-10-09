@@ -39,17 +39,19 @@ function Login({ onLogin }) {
 }
 
 const Logo = styled.h1`
-  font-family: "Permanent Marker", cursive;
+  font-family: 'Roboto', sans-serif; /* Change the font family to a modern sans-serif font */
   font-size: 3rem;
-  color: deeppink;
+  color: #FF6B6B; /* Change the color to a modern color code */
   margin: 8px 0 16px;
+  font-weight: 300;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
 `;
 
-// const Wrapper = styled.section`
-//   max-width: 500px;
-//   margin: 40px auto;
-//   padding: 16px;
-// `;
 
 const Divider = styled.hr`
   border: none;

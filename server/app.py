@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-# Standard library imports
-
-# Remote library imports
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
@@ -66,7 +63,7 @@ class Login(Resource):
         user = User.query.filter(User.username == username).first()
         
         if user:
-            #get password
+            
             password = request.get_json()['password']
 
             if user.authenticate(password):
@@ -159,7 +156,6 @@ class KindnessByID(Resource):
         category = Category.query.filter(Category.name == json['category']).first()
         
         if user:
-
         
             try:
                 kindness = Kindness(
@@ -204,7 +200,6 @@ class KindnessUser(Resource):
                 }
                 kindnesses.append(kindness_dict)
 
-            # kindnesses =[kindness.to_dict() for kindness in Kindness.query.all()]
             return (kindnesses),200
         else:
             return {"message":"unauthorized"}, 401
@@ -249,8 +244,7 @@ class Comments(Resource):
         for comment in comments:
            user = User.query.get(comment.user_id)
            kindness = Kindness.query.get(comment.kindness_id)
-        # user = User.query.filter(User.id == comment.user_id).first()
-        # kindness = Kindness.query.filter(Kindness.id == comment.kindness_id).first()
+           
            if user and kindness:
                comment_dict = {
                    "id": comment.id,
@@ -260,12 +254,6 @@ class Comments(Resource):
                }
                comment_dicts.append(comment_dict)
 
-        # comment_dict = {
-        #     "id": comment.id,
-        #     "text": comment.text,
-        #     "user": user.username,
-        #     "kindness": kindness.description
-        # }
         return comment_dicts, 200
 
 api.add_resource(Index, '/')

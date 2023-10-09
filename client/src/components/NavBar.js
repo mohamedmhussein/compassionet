@@ -40,11 +40,11 @@ const Wrapper = styled.header`
 `;
 
 const Logo = styled.h1`
-  font-family: "Permanent Marker", cursive;
+  font-family: 'Roboto', sans-serif; /* Change the font family to a modern sans-serif font */
   font-size: 3rem;
-  color: deeppink;
-  margin: 0;
-  line-height: 1;
+  color: #FF6B6B; /* Change the color to a modern color code */
+  margin: 8px 0 16px;
+  font-weight: 300;
 
   a {
     color: inherit;

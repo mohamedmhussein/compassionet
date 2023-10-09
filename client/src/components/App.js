@@ -55,7 +55,6 @@ function App() {
           <Route
           path="/kindness/:id/edit"
           render={({ match }) => {
-            // Extract the 'id' parameter from the URL
             const kindnessId = match.params.id;
 
             return <EditKindness kindnessId={kindnessId} categories={categories} />;

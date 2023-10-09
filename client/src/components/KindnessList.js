@@ -16,9 +16,9 @@ function KindnessList() {
   }, []);
 
     function handleDelete(id){
-        console.log(kindnesses)
+        
         // Delete request
-        fetch(`/kindnessUser/${id}`, {
+        fetch(`/kindness/${id}`, {
           method: "DELETE",
         })
           .then((r) => {
@@ -26,11 +26,13 @@ function KindnessList() {
               setKindnesses((prevKindnesses) =>
                 prevKindnesses.filter((kindness) => kindness.id !== id)
               );
+              
             }
           })
           .catch((error) => {
             console.error("Error deleting kindness:", error);
           });
+          console.log(kindnesses)
       };
 
   return (
