@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
 import '../styles/NewKindness.css';
-import { useParams, useLocation } from "react-router-dom";
+import {useLocation } from "react-router-dom";
 
 function NewKindness({categories}) {
 
@@ -12,7 +12,6 @@ function NewKindness({categories}) {
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
-  // const { id } = useParams();
   const location = useLocation();
   const kindness = location.state.kindness;
 
@@ -25,7 +24,6 @@ function NewKindness({categories}) {
         date: kindness.date,
         description: kindness.description
     },
-    // validationSchema: formSchema,
     onSubmit: (e) => {
         setIsLoading(true);
         fetch(`/kindness/${kindness.id}`, {

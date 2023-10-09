@@ -6,7 +6,6 @@ function CommentList({ kindnessId }) {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    // Fetch comments for the given kindnessId
     fetch(`/comments/${kindnessId}`)
       .then((response) => response.json())
       .then((data) => {

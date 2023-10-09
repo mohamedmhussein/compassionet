@@ -6,12 +6,11 @@ function LoginForm({ onLogin }) {
   const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
+  const {values, handleChange, handleSubmit} = useFormik({
     initialValues: {
         username: "",
         password: "",
     },
-    // validationSchema: formSchema,
     onSubmit: () => {
 
       fetch("/login", {

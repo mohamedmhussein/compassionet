@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
+import { Button, Error, Input, FormField, Label} from "../styles";
 import {useFormik} from "formik";
 import * as yup from "yup";
 import "../styles/SignUp.css"
@@ -39,7 +39,7 @@ function SignUpForm({ onLogin }) {
     .required("You must confirm the entered password")
   });
   
-  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
+  const {values, errors, handleChange, handleSubmit} = useFormik({
     initialValues: {
         username: "",
         email: "",

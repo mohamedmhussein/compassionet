@@ -17,7 +17,6 @@ function KindnessList() {
 
     function handleDelete(id){
         
-        // Delete request
         fetch(`/kindness/${id}`, {
           method: "DELETE",
         })
@@ -54,13 +53,12 @@ function KindnessList() {
                   <Link
                     to={{
                         pathname: `/kindness/${kindness.id}/edit`,
-                        state: { kindness }, // Pass the kindness object as state
+                        state: { kindness }, 
                     }}>
               Edit
             </Link>
                 </Button>
                 <Button
-                //   as={Link}
                   onClick={() => handleDelete(kindness.id)}
                   color="primary"
                 >

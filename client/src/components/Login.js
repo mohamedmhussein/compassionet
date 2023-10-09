@@ -3,7 +3,6 @@ import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import SignUp from "./SignUp";
 import { Button } from "../styles";
-import "../styles/Login.css"
 
 function Login({ onLogin }) {
   const [showLogin, setShowLogin] = useState(true);

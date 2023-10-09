@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
@@ -21,7 +21,6 @@ function NewKindness({ user, categories }) {
         date: "",
         description: ""
     },
-    // validationSchema: formSchema,
     onSubmit: (e) => {
         setIsLoading(true);
         fetch("/kindnessUser", {
