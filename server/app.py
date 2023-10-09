@@ -106,6 +106,7 @@ class AllKindnesses(Resource):
             user = User.query.filter(User.id == kindness.user_id).first()
 
             kindness_dict = {
+                "id": kindness.id,
                 "title": kindness.title,
                 "description": kindness.description,
                 "date": kindness.date,
@@ -117,6 +118,21 @@ class AllKindnesses(Resource):
         return (kindnesses),200
 
 class KindnessByID(Resource):
+    def get(self, id):
+        kindness = Kindness.query.filter_by(id=id).first()
+
+        category=Category.query.filter_by(id=id).first()
+        user = User.query.filter(User.id == kindness.user_id).first()
+
+        kindness_dict = {
+            "title": kindness.title,
+            "description": kindness.description,
+            "date": kindness.date,
+            "category": category.name,
+            "performer": user.username,
+        }
+        return kindness_dict, 200
+    
     def delete(self, id):
         kindness = Kindness.query.filter_by(id=id).first()
 
@@ -124,6 +140,51 @@ class KindnessByID(Resource):
         db.session.commit()
 
         return "", 204
+    def patch(self,id):
+        kindness = Kindness.query.filter_by(id=id).first()
+        json = request.get_json()
+        category = Category.query.filter(Category.name == json['category']).first()        
+        
+        for attr in ['title', 'description', 'date']:
+            setattr(kindness, attr, json[attr])
+        kindness.category_id = category.id
+        db.session.add(kindness)
+        db.session.commit()
+
+        return "",201
+    
+    def post(self,id):
+        json = request.get_json()
+        user=User.query.filter(User.id == session.get('user_id')).first()
+        category = Category.query.filter(Category.name == json['category']).first()
+        
+        if user:
+
+        
+            try:
+                kindness = Kindness(
+                    title = json['title'],
+                    description = json['description'],
+                    date = json['date'],
+                    user_id = session['user_id'],
+                    category_id = category.id
+                )
+                db.session.add(kindness)
+                db.session.commit()
+            except IntegrityError:
+                  return {"message":"Unprocessable Entity"}, 422  
+
+            return (
+                {
+                    "title" : kindness.title,
+                    "date" : kindness.date,
+                    "description" : kindness.description,
+                    "user_id" : kindness.user_id,
+                    "category_id" : kindness.category_id  
+                }
+            ),201
+        else:
+            return {"message":"unauthorized"}, 401
 
 class KindnessUser(Resource):
     def get(self):
@@ -181,6 +242,19 @@ class KindnessUser(Resource):
         else:
             return {"message":"unauthorized"}, 401
 
+class Comments(Resource):
+    def get(self,id):
+        comment = Comment.query.filter(Comment.kindness_id==id).first()
+        user = User.query.filter(User.id == comment.user_id).first()
+        kindness = Kindness.query.filter(Kindness.id == comment.kindness_id).first()
+        comment_dict = {
+            "id": comment.id,
+            "text": comment.text,
+            "user": user.username,
+            "kindness": kindness.description
+        }
+        return comment_dict, 200
+
 api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
@@ -189,7 +263,9 @@ api.add_resource(Logout, '/logout', endpoint='logout')
 api.add_resource(Categories, '/categories', endpoint='categories')
 api.add_resource(KindnessUser, '/kindnessUser', endpoint='kindnessUser')
 api.add_resource(AllKindnesses, '/allKindnesses', endpoint='allKindnesses')
-api.add_resource(KindnessByID, '/kindnessUser/<int:id>', endpoint='/kindnessUser/<int:id>')
+api.add_resource(KindnessByID, '/kindness/<int:id>', endpoint='/kindness/<int:id>')
+api.add_resource(Comments, '/comments/<int:id>', endpoint='/comments/<int:id>')
+
 
 
 if __name__ == '__main__':

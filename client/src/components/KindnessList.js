@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
 import "../styles/KindnessList.css"
+import CommentList from "./CommentList";
 
 function KindnessList() {
   const [kindnesses, setKindnesses] = useState([]);
@@ -47,12 +48,14 @@ function KindnessList() {
               </p>
               <ReactMarkdown>{kindness.description}</ReactMarkdown>
               <ButtonContainer>
-                <Button
-                //   as={Link}
-                  to={`/edit/${kindness.id}`}
-                  color="primary"
-                >
-                  Edit
+                <Button color = 'primary'>
+                  <Link
+                    to={{
+                        pathname: `/kindness/${kindness.id}/edit`,
+                        state: { kindness }, // Pass the kindness object as state
+                    }}>
+              Edit
+            </Link>
                 </Button>
                 <Button
                 //   as={Link}
@@ -63,6 +66,7 @@ function KindnessList() {
                 </Button>
               </ButtonContainer>
             </Box>
+            <CommentList kindnessId={kindness.id} />
           </Kindness>
         ))
       ) : (

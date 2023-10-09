@@ -5,13 +5,14 @@ import NewKindness from "./NewKindness";
 import KindnessList from "./KindnessList";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AllKindnesses from "./AllKindnesses"
+import EditKindness from "./EditKindness"
 
 
 
 function App() {
   
   const [user, setUser] = useState(null);
-
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     // auto-login
     fetch("/check_session")
@@ -21,6 +22,19 @@ function App() {
       }
     });
   }, []);
+
+  useEffect(() =>{
+    fetch("/categories")
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((category) => {
+            setCategories(category)
+            console.log(category)
+        })
+        
+      }
+    });
+  },[])
   
   if (!user) return <Login onLogin={setUser} />;
   
@@ -30,7 +44,7 @@ function App() {
       <main>
         <Switch>
           <Route exact path="/new">
-            <NewKindness user={user} />
+            <NewKindness user={user} categories = {categories} />
           </Route>
           <Route exact path="/">
             <KindnessList />
@@ -38,6 +52,15 @@ function App() {
           <Route exact path="/all">
             <AllKindnesses />
           </Route>
+          <Route
+          path="/kindness/:id/edit"
+          render={({ match }) => {
+            // Extract the 'id' parameter from the URL
+            const kindnessId = match.params.id;
+
+            return <EditKindness kindnessId={kindnessId} categories={categories} />;
+          }}
+        />
         </Switch>
       </main>
     </Router>

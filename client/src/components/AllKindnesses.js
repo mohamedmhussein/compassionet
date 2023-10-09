@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Box, Button } from "../styles";
 import "../styles/KindnessList.css"
+import CommentList from "./CommentList";
 
 function KindnessList() {
   const [kindnesses, setKindnesses] = useState([]);
@@ -31,6 +32,7 @@ function KindnessList() {
               </p>
               <ReactMarkdown>{kindness.description}</ReactMarkdown>
             </Box>
+            <CommentList kindnessId={kindness.id} />
           </Kindness>
         ))
       ) : (

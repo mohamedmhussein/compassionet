@@ -3,29 +3,33 @@ import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label, Textarea } from "../styles";
 import {useFormik} from "formik";
-import '../styles/NewKindness.css'
+import '../styles/NewKindness.css';
+import { useParams, useLocation } from "react-router-dom";
 
-function NewKindness({ user, categories }) {
-
+function NewKindness({categories}) {
 
   const [error, setError] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
 
+  // const { id } = useParams();
+  const location = useLocation();
+  const kindness = location.state.kindness;
 
-
-  const {values, errors, touched, handleChange, handleSubmit} = useFormik({
+  const {values, errors, touched, handleChange, handleSubmit} = 
+    
+  useFormik({
     initialValues: {
-        title: "",
-        category: "",
-        date: "",
-        description: ""
+        title: kindness.title,
+        category: kindness.category,
+        date: kindness.date,
+        description: kindness.description
     },
     // validationSchema: formSchema,
     onSubmit: (e) => {
         setIsLoading(true);
-        fetch("/kindnessUser", {
-          method: "POST",
+        fetch(`/kindness/${kindness.id}`, {
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
@@ -38,14 +42,14 @@ function NewKindness({ user, categories }) {
             r.json().then((err) => setError(err.error));
           }
         });
-      console.log("posted", values)
+      console.log("patched", values)
     }
   })
 
   return (
     <Wrapper>
       <WrapperChild>
-        <h2>Post a Random Act of Kindness</h2>
+        <h2>Edit a Random Act of Kindness</h2>
         <form onSubmit={handleSubmit}>
           <FormField>
             <Label htmlFor="title">Title</Label>
@@ -91,7 +95,7 @@ function NewKindness({ user, categories }) {
           </FormField>
           <FormField>
             <Button color="primary" type="submit">
-              {isLoading ? "Loading..." : "Submit Kindness"}
+              {isLoading ? "Loading..." : "Modify"}
             </Button>
           </FormField>
           <FormField>
