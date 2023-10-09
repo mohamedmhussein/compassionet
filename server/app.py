@@ -244,16 +244,29 @@ class KindnessUser(Resource):
 
 class Comments(Resource):
     def get(self,id):
-        comment = Comment.query.filter(Comment.kindness_id==id).first()
-        user = User.query.filter(User.id == comment.user_id).first()
-        kindness = Kindness.query.filter(Kindness.id == comment.kindness_id).first()
-        comment_dict = {
-            "id": comment.id,
-            "text": comment.text,
-            "user": user.username,
-            "kindness": kindness.description
-        }
-        return comment_dict, 200
+        comments = Comment.query.filter(Comment.kindness_id==id).all()
+        comment_dicts = []
+        for comment in comments:
+           user = User.query.get(comment.user_id)
+           kindness = Kindness.query.get(comment.kindness_id)
+        # user = User.query.filter(User.id == comment.user_id).first()
+        # kindness = Kindness.query.filter(Kindness.id == comment.kindness_id).first()
+           if user and kindness:
+               comment_dict = {
+                   "id": comment.id,
+                   "text": comment.text,
+                   "user": user.username,
+                    "kindness": kindness.description
+               }
+               comment_dicts.append(comment_dict)
+
+        # comment_dict = {
+        #     "id": comment.id,
+        #     "text": comment.text,
+        #     "user": user.username,
+        #     "kindness": kindness.description
+        # }
+        return comment_dicts, 200
 
 api.add_resource(Index, '/')
 api.add_resource(Signup, '/signup', endpoint='signup')
