@@ -1,6 +1,6 @@
 # CompassioNet
 
-CompassioNet is a web application that encourages users to share their acts of kindness with the world. Users can post, view, edit and delete acts of kindness to promote positivity and inspire others.
+CompassioNet is a web application that encourages users to share their acts of kindness with the world. Users can post, view, edit and delete acts of kindness to promote positivity and inspire others. Some CSS stylings are used from the course labs to accelerate the project timeline.
 
 ## Table of Contents
 
