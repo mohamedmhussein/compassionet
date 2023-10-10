@@ -2,7 +2,6 @@
 
 # Standard library imports
 import random
-import datetime
 import bcrypt
 # Remote library imports
 from faker import Faker
